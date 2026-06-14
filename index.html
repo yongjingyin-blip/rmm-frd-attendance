@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RMM FRD Review Workshop (Selangor) — Attendance</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f4f6f9; min-height: 100vh; padding: 2rem 1rem; color: #1a1a1a; }
+  .wrap { max-width: 520px; margin: 0 auto; }
+  .header { text-align: center; margin-bottom: 2rem; }
+  .logo-bar { display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 0.5rem; }
+  .logo-icon { width: 42px; height: 42px; background: #185FA5; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .logo-icon i { color: #fff; font-size: 22px; }
+  .title { font-size: 18px; font-weight: 600; color: #1a1a1a; text-align: left; }
+  .subtitle { font-size: 13px; color: #666; margin-top: 3px; text-align: left; }
+  .card { background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; padding: 1.5rem; margin-bottom: 1rem; }
+  .field { margin-bottom: 1.25rem; }
+  .field:last-child { margin-bottom: 0; }
+  label.field-label { display: block; font-size: 13px; font-weight: 500; color: #555; margin-bottom: 6px; }
+  input[type=text], input[type=date], select {
+    width: 100%; padding: 9px 12px; font-size: 14px; border: 1px solid #d1d5db;
+    border-radius: 8px; background: #fff; color: #1a1a1a; outline: none;
+    transition: border-color 0.15s;
+  }
+  input[type=text]:focus, input[type=date]:focus, select:focus { border-color: #185FA5; box-shadow: 0 0 0 3px rgba(24,95,165,0.1); }
+  #other-dept { margin-top: 8px; display: none; }
+  .session-group { display: none; flex-direction: column; gap: 8px; margin-top: 4px; }
+  .session-group.visible { display: flex; }
+  .session-option { display: flex; align-items: center; gap: 10px; padding: 10px 14px; border: 1px solid #e5e7eb; border-radius: 8px; cursor: pointer; font-size: 14px; color: #1a1a1a; background: #fff; transition: all 0.15s; }
+  .session-option:hover { background: #f0f7ff; border-color: #93c5fd; }
+  .session-option.selected { border-color: #185FA5; background: #EBF4FF; color: #0C447C; font-weight: 500; }
+  .session-option input[type=radio] { accent-color: #185FA5; width: 16px; height: 16px; flex-shrink: 0; cursor: pointer; }
+  .note-box { font-size: 13px; color: #666; padding: 10px 14px; border: 1px dashed #d1d5db; border-radius: 8px; background: #f9fafb; display: none; line-height: 1.5; }
+  .btn-submit { width: 100%; padding: 11px; background: #185FA5; color: #fff; border: none; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: background 0.15s; margin-top: 1.5rem; }
+  .btn-submit:hover { background: #0C447C; }
+  .success-card { background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 12px; padding: 2rem 1.5rem; text-align: center; display: none; }
+  .success-card i.big { font-size: 48px; color: #16a34a; margin-bottom: 12px; display: block; }
+  .success-name { font-size: 18px; font-weight: 600; color: #1a1a1a; }
+  .success-info { font-size: 13px; color: #555; margin-top: 8px; line-height: 1.8; white-space: pre-line; }
+  .divider { border: none; border-top: 1px solid #d1fae5; margin: 1.25rem 0; }
+  .admin-toggle { text-align: center; margin-top: 1rem; }
+  .admin-toggle button { background: none; border: none; font-size: 12px; color: #aaa; cursor: pointer; text-decoration: underline; }
+  .admin-panel { display: none; background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 12px; padding: 1.25rem; margin-top: 1rem; }
+  .admin-panel h3 { font-size: 14px; font-weight: 600; margin-bottom: 1rem; color: #1a1a1a; }
+  .record-count { font-size: 13px; color: #666; margin-bottom: 1rem; }
+  .btn-row { display: flex; gap: 8px; flex-wrap: wrap; }
+  .btn-csv { background: #fff; border: 1px solid #d1d5db; border-radius: 8px; padding: 8px 16px; font-size: 13px; cursor: pointer; color: #1a1a1a; display: inline-flex; align-items: center; gap: 6px; }
+  .btn-csv:hover { background: #f3f4f6; }
+  .btn-clear { background: #fff; border: 1px solid #fca5a5; border-radius: 8px; padding: 8px 16px; font-size: 13px; cursor: pointer; color: #dc2626; display: inline-flex; align-items: center; gap: 6px; }
+  .btn-clear:hover { background: #fef2f2; }
+  .attendance-list { margin-top: 1rem; max-height: 260px; overflow-y: auto; }
+  .att-row { font-size: 12px; color: #555; padding: 7px 0; border-bottom: 1px solid #e5e7eb; display: flex; gap: 8px; align-items: center; }
+  .att-row:last-child { border-bottom: none; }
+  .att-num { color: #aaa; min-width: 20px; }
+  .att-name { flex: 1; font-weight: 500; color: #1a1a1a; }
+  .att-dept { min-width: 70px; color: #555; }
+  .att-badge { background: #EBF4FF; color: #0C447C; border-radius: 4px; padding: 2px 7px; font-size: 11px; white-space: nowrap; }
+  .footer { text-align: center; margin-top: 2rem; font-size: 11px; color: #ccc; }
+  @media (prefers-color-scheme: dark) {
+    body { background: #0f172a; color: #e2e8f0; }
+    .card, .session-option { background: #1e293b; border-color: #334155; color: #e2e8f0; }
+    .title, .success-name, .att-name, .admin-panel h3 { color: #e2e8f0; }
+    .subtitle, label.field-label, .record-count, .att-row, .att-dept { color: #94a3b8; }
+    input[type=text], input[type=date], select { background: #1e293b; border-color: #334155; color: #e2e8f0; }
+    .note-box, .admin-panel { background: #1e293b; border-color: #334155; }
+    .btn-csv { background: #1e293b; border-color: #334155; color: #e2e8f0; }
+    .btn-csv:hover { background: #334155; }
+    .session-option:hover { background: #1e3a5f; border-color: #3b82f6; }
+    .session-option.selected { background: #1e3a5f; border-color: #3b82f6; color: #93c5fd; }
+    .att-row { border-color: #334155; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <div class="logo-bar">
+      <div class="logo-icon"><i class="ti ti-clipboard-list"></i></div>
+      <div>
+        <div class="title">RMM FRD Review Workshop (Selangor)</div>
+        <div class="subtitle">Attendance Registration</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" id="form-card">
+    <div class="field">
+      <label class="field-label" for="fullname"><i class="ti ti-user" style="font-size:14px;vertical-align:-2px;margin-right:4px"></i>Full name</label>
+      <input type="text" id="fullname" placeholder="Enter your full name" autocomplete="name">
+    </div>
+
+    <div class="field">
+      <label class="field-label" for="dept"><i class="ti ti-building" style="font-size:14px;vertical-align:-2px;margin-right:4px"></i>Department</label>
+      <select id="dept" onchange="toggleOther()">
+        <option value="">— Select department —</option>
+        <option>PURCHASING</option>
+        <option>PLANNING</option>
+        <option>PROD</option>
+        <option>WH</option>
+        <option>R&amp;D</option>
+        <option>ACC</option>
+        <option>MIS</option>
+        <option value="OTHERS">OTHERS — PLEASE SPECIFY</option>
+      </select>
+      <input type="text" id="other-dept" placeholder="Please specify your department">
+    </div>
+
+    <div class="field">
+      <label class="field-label" for="sdate"><i class="ti ti-calendar" style="font-size:14px;vertical-align:-2px;margin-right:4px"></i>Session date</label>
+      <input type="date" id="sdate" onchange="updateSessions()" min="2026-06-15" max="2026-06-19">
+    </div>
+
+    <div class="field">
+      <label class="field-label"><i class="ti ti-calendar-event" style="font-size:14px;vertical-align:-2px;margin-right:4px"></i>Session</label>
+      <div class="session-group" id="session-group"></div>
+      <div class="note-box" id="holiday-note"><i class="ti ti-info-circle" style="font-size:14px;vertical-align:-2px;margin-right:4px"></i>Day 3 (17 Jun) is a Public Holiday — no session scheduled.</div>
+      <div class="note-box" id="no-session-note" style="display:block"><i class="ti ti-info-circle" style="font-size:14px;vertical-align:-2px;margin-right:4px"></i>Please select a session date above.</div>
+    </div>
+
+    <button class="btn-submit" onclick="submitForm()">
+      <i class="ti ti-check"></i> Register attendance
+    </button>
+  </div>
+
+  <div class="success-card" id="success-card">
+    <i class="ti ti-circle-check big"></i>
+    <div class="success-name" id="success-name"></div>
+    <div class="success-info" id="success-info"></div>
+    <hr class="divider">
+    <button class="btn-submit" onclick="resetForm()">
+      <i class="ti ti-plus"></i> Register another person
+    </button>
+  </div>
+
+  <div class="admin-toggle">
+    <button onclick="toggleAdmin()">Admin view</button>
+  </div>
+
+  <div class="admin-panel" id="admin-panel">
+    <h3><i class="ti ti-table" style="font-size:15px;vertical-align:-2px;margin-right:6px"></i>Attendance records</h3>
+    <div class="record-count" id="record-count">No records yet.</div>
+    <div class="btn-row">
+      <button class="btn-csv" onclick="downloadCSV()"><i class="ti ti-download" style="font-size:14px"></i> Download CSV</button>
+      <button class="btn-clear" onclick="clearRecords()"><i class="ti ti-trash" style="font-size:14px"></i> Clear all</button>
+    </div>
+    <div class="attendance-list" id="att-list"></div>
+  </div>
+
+  <div class="footer">RMM FRD Review Workshop (Selangor) &mdash; DAXONET Solutions</div>
+
+</div>
+
+<script>
+  var records = [];
+
+  var SESSION_MAP = {
+    '2026-06-15': ['Day 1 — Production Control'],
+    '2026-06-16': ['Day 2 — Procurement and Sourcing'],
+    '2026-06-17': [],
+    '2026-06-18': ['Day 4 — Procurement and Sourcing','Day 4 — Product Information Management','Day 4 — Inventory Management'],
+    '2026-06-19': ['Day 5 — Sales and Marketing','Day 5 — Inventory']
+  };
+
+  var DATE_LABELS = {
+    '2026-06-15': '15 Jun 2026',
+    '2026-06-16': '16 Jun 2026',
+    '2026-06-17': '17 Jun 2026',
+    '2026-06-18': '18 Jun 2026',
+    '2026-06-19': '19 Jun 2026'
+  };
+
+  function updateSessions() {
+    var date = document.getElementById('sdate').value;
+    var grp = document.getElementById('session-group');
+    var hol = document.getElementById('holiday-note');
+    var nos = document.getElementById('no-session-note');
+
+    grp.innerHTML = '';
+    grp.classList.remove('visible');
+    hol.style.display = 'none';
+    nos.style.display = 'none';
+
+    if (!date) { nos.style.display = 'block'; return; }
+    if (!SESSION_MAP[date]) { nos.style.display = 'block'; return; }
+    if (date === '2026-06-17') { hol.style.display = 'block'; return; }
+
+    SESSION_MAP[date].forEach(function(s, i) {
+      var id = 'sess_' + i;
+      var lbl = document.createElement('label');
+      lbl.className = 'session-option';
+      lbl.setAttribute('for', id);
+      lbl.innerHTML = '<input type="radio" name="session" id="' + id + '" value="' + s + '" onchange="highlightSession()"> ' + s;
+      grp.appendChild(lbl);
+    });
+    grp.classList.add('visible');
+  }
+
+  function highlightSession() {
+    document.querySelectorAll('.session-option').forEach(function(el) {
+      var r = el.querySelector('input[type=radio]');
+      el.classList.toggle('selected', r && r.checked);
+    });
+  }
+
+  function toggleOther() {
+    var val = document.getElementById('dept').value;
+    document.getElementById('other-dept').style.display = val === 'OTHERS' ? 'block' : 'none';
+  }
+
+  function submitForm() {
+    var name = document.getElementById('fullname').value.trim();
+    var deptVal = document.getElementById('dept').value;
+    var otherDept = document.getElementById('other-dept').value.trim();
+    var dept = deptVal === 'OTHERS' ? (otherDept || 'OTHERS') : deptVal;
+    var date = document.getElementById('sdate').value;
+    var sessionEl = document.querySelector('input[name="session"]:checked');
+    var session = sessionEl ? sessionEl.value : '';
+
+    if (!name) { alert('Please enter your full name.'); return; }
+    if (!dept) { alert('Please select your department.'); return; }
+    if (!date) { alert('Please select a session date.'); return; }
+    if (date === '2026-06-17') { alert('Day 3 is a Public Holiday — no session to register for.'); return; }
+    if (!session) { alert('Please select a session.'); return; }
+
+    var ts = new Date().toLocaleString('en-GB');
+    var dateLabel = DATE_LABELS[date] || date;
+    records.push({ name: name, dept: dept, session: session, date: date, dateLabel: dateLabel, ts: ts });
+
+    document.getElementById('success-name').textContent = name;
+    document.getElementById('success-info').textContent = dept + '\n' + session + '\n' + dateLabel;
+    document.getElementById('form-card').style.display = 'none';
+    document.getElementById('success-card').style.display = 'block';
+    updateAdminPanel();
+  }
+
+  function resetForm() {
+    document.getElementById('fullname').value = '';
+    document.getElementById('dept').value = '';
+    document.getElementById('other-dept').style.display = 'none';
+    document.getElementById('other-dept').value = '';
+    document.getElementById('sdate').value = '';
+    document.getElementById('session-group').innerHTML = '';
+    document.getElementById('session-group').classList.remove('visible');
+    document.getElementById('no-session-note').style.display = 'block';
+    document.getElementById('form-card').style.display = 'block';
+    document.getElementById('success-card').style.display = 'none';
+  }
+
+  function toggleAdmin() {
+    var p = document.getElementById('admin-panel');
+    p.style.display = p.style.display === 'block' ? 'none' : 'block';
+    updateAdminPanel();
+  }
+
+  function updateAdminPanel() {
+    var countEl = document.getElementById('record-count');
+    var listEl = document.getElementById('att-list');
+    countEl.textContent = records.length + ' record' + (records.length !== 1 ? 's' : '') + ' registered';
+    listEl.innerHTML = records.length ? records.map(function(r, i) {
+      return '<div class="att-row"><span class="att-num">' + (i+1) + '</span><span class="att-name">' + r.name + '</span><span class="att-dept">' + r.dept + '</span><span class="att-badge">' + r.session + '</span></div>';
+    }).join('') : '<div style="font-size:13px;color:#aaa;padding:8px 0">No records yet.</div>';
+  }
+
+  function downloadCSV() {
+    if (!records.length) { alert('No records to download yet.'); return; }
+    var rows = [['No.','Full Name','Department','Session','Session Date','Timestamp']];
+    records.forEach(function(r, i) {
+      rows.push([i+1, r.name, r.dept, r.session, r.dateLabel, r.ts]);
+    });
+    var csv = rows.map(function(r) {
+      return r.map(function(v) { return '"' + String(v).replace(/"/g,'""') + '"'; }).join(',');
+    }).join('\n');
+    var a = document.createElement('a');
+    a.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
+    a.download = 'RMM_FRD_Attendance_Selangor.csv';
+    a.click();
+  }
+
+  function clearRecords() {
+    if (!records.length) return;
+    if (confirm('Clear all ' + records.length + ' record(s)? This cannot be undone.')) {
+      records = [];
+      updateAdminPanel();
+    }
+  }
+</script>
+</body>
+</html>
